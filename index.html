@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Parrot Tecno Web</title>
+
+  <style>
+    /* Estilos Generales */
+    body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; 
+    }
+
+    h2, h3, h4 {
+        color: #0056b3; 
+        text-align: center; 
+        margin-top: 25px;
+    }
+
+    /* Define el ancho máximo para el contenido principal y lo centra */
+    main, p, tt, address, code, ul, ol, table, .nota-adb, .mensaje-ambiental {
+        max-width: 650px; 
+        padding: 0 15px; 
+        margin: 1em auto;
+    }
+
+    /* Estilo para mensajes ambientales destacados */
+    .mensaje-ambiental {
+        font-style: italic;
+        font-weight: bold;
+        color: #1a7a2e; 
+        border-left: 5px solid #28a745;
+        padding-left: 10px;
+    }
+
+    code {
+        background-color: #eee;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: monospace;
+    }
+
+    /* Estilos de Navegación */
+    header {
+        background-color: #0056b3; 
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+    }
+
+    .main-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .main-nav li {
+        display: inline-block; 
+        margin: 0 15px;
+    }
+
+    .main-nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 8px 12px;
+        transition: background-color 0.3s;
+        border-radius: 5px;
+    }
+
+    .main-nav a:hover {
+        background-color: #003c7a; 
+    }
+
+    /* Estilos de Contenedores Generales */
+    /* Se elimina 'contenedor-descarga-parrot' de esta lista ya que la sección fue removida */
+    .contenedor-texto, .contenedor-ambiental {
+        width: 90%;
+        max-width: 650px;
+        padding: 20px;
+        margin: 20px auto; 
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        line-height: 1.6;
+    }
+
+    /* Estilo para la Ayuda ADB */
+    .contenedor-texto {
+        border: 1px solid #cce5ff;
+        border-left: 6px solid #007bff; 
+        background-color: #f8faff; 
+    }
+
+    /* Estilo para la nota dentro de la Ayuda ADB */
+    .nota-adb {
+        text-align: center; 
+        font-style: italic;
+        font-weight: bold;
+        color: #007bff;
+        margin: 10px auto;
+    }
+
+    /* Estilos Específicos para la sección Ambiental */
+    .contenedor-ambiental {
+        border: 1px solid #ffebcc; 
+        border-left: 6px solid #ff8c00; /* Naranja para la gravedad del tema */
+        background-color: #fff8eb; 
+    }
+        
+    /* Estilos del Botón de Descarga / Link de Contaminación */
+    /* Este estilo se conserva para el botón que lleva a las imágenes de contaminación */
+    .boton-descarga { 
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 15px; 
+        background-color: #28a745; 
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .boton-descarga:hover {
+        background-color: #1e7e34; 
+    }
+
+    /* Se elimina el estilo #loro-pixelado y la animación @keyframes bounce */
+
+
+    /* --- Estilos de la Splash Screen --- */
+    #splash-screen {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9); 
+        color: white;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        z-index: 9999; 
+        text-align: center;
+        opacity: 1; 
+        transition: opacity 0.5s ease-out; 
+    }
+
+    .splash-content {
+        animation: fadeInScale 1s forwards; 
+    }
+
+    #loro-ambiental {
+        font-family: monospace; 
+        font-size: 150px; 
+        display: block; 
+        margin-bottom: 20px;
+        animation: floatUpDown 2s infinite alternate ease-in-out; 
+    }
+
+    #splash-screen h2 {
+        color: white; 
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        font-family: monospace; 
+    }
+
+    .boton-saltar {
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: #28a745; 
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: background-color 0.3s, transform 0.2s;
+        border: none; 
+    }
+
+    .boton-saltar:hover {
+        background-color: #1e7e34; 
+        transform: scale(1.05); 
+    }
+
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes floatUpDown {
+        from { transform: translateY(0px); }
+        to { transform: translateY(-15px); }
+    }
+
+    /* Estilos para la tabla de contaminación */
+    #tabla-causas {
+        width: 95%; 
+        margin: 20px auto 0 auto; 
+        border-collapse: collapse; 
+        font-size: 0.95em;
+        background-color: white; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: left;
+    }
+
+    /* Estilos para encabezados de tabla */
+    #tabla-causas th {
+        background-color: #0056b3; 
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    /* Estilos para celdas de datos */
+    #tabla-causas td {
+        padding: 10px;
+        border-bottom: 1px solid #ffc107; 
+    }
+
+    /* Estilo para filas pares (para mejorar la lectura) */
+    #tabla-causas tbody tr:nth-child(even) {
+        background-color: #fce8c4; 
+    }
+
+    /* Estilo para pasar el ratón */
+    #tabla-causas tbody tr:hover {
+        background-color: #ffc107; 
+    }
+
+    /* Estilos del Pie de Página */
+    footer {
+        background-color: #0056b3; 
+        color: white; 
+        text-align: center; 
+        padding: 20px 0; 
+        margin-top: 40px; 
+        font-size: 0.9em;
+    }
+
+    /* Estilo para los enlaces dentro del footer */
+    footer a {
+        color: #f4f4f4; 
+        text-decoration: none; 
+        font-weight: bold;
+    }
+
+    footer a:hover {
+        text-decoration: underline; 
+    }
+
+    /* Media Query para Dispositivos Móviles */
+    @media screen and (max-width: 600px) {
+        .main-nav ul {
+            text-align: left;
+        }
+
+        .main-nav li {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .main-nav a {
+            display: block;
+            padding: 10px 15px;
+        }
+    }
+  </style>
+</head>
+<body>
+
+    <div id="splash-screen">
+        <div class="splash-content">
+            <span id="loro-ambiental">🦜</span>
+            <h2>¡Vamos a Reciclar!</h2>
+            <button id="saltar-splash" class="boton-saltar">Saltar</button>
+        </div>
+    </div>
+    
+    <header>
+        <nav class="main-nav" aria-label="Navegación Principal">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#ayuda-adb">Ayuda ADB</a></li>
+                <li><a href="#ambiente">Medio Ambiente</a></li> 
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Parrot Tecno Web!</h2>
+        <p><tt>Esta por predeterminado la web de Parrot Tecno y Parrot Programs.</tt></p>
+        <h4>Aquí se presenta información básica para ayuda Online en archivos.</h4>
+        <p>Aquí estará información adicional y de ayuda básica en archivos como RAR y otros tipos y unos no estarán disponibles en esta web, solo limitados.</p>
+        <h4>Se actualizará la información, solo información básica y no avanzada.</h4>
+        
+        <section id="ayuda-adb" class="contenedor-texto">
+            <h3>Ayuda para Reporte de Errores con ADB</h3>
+            <p>~~~~~~~~~Parrot Tecno Help Online~~~~~~~~~~Codigo:#03&&P</p>
+            <p>-¿Quiere hacer un reporte de errores desde ADB?</p>
+            <ol>
+                <li>Active adb en un sistema operativo como linux, windows y Mac OS.</li>
+                <li>Comparta el archivo ZIP de adb en su terminal.</li>
+                <li>Conecte su dispositivo a su PC a través de un cable USB.</li>
+                <li>Verifique la conexión USB con este comando: <code>adb devices</code></li>
+                <li>Si dice <code>unauthorized</code>, deje que la PC se conecte con el dispositivo y en la pantalla de inicio saldrá:</li>
+                <p class="nota-adb">-Autorizar conexión con dispositivo externo o USB</p>
+                <li>Cuando salga esto, toque aceptar para que la conexión del dispositivo externo se conecte.</li>
+                <li>Debe tener en cuenta que tiene que tener el modo desarrollador activado y para activarlo puede ir a configuración, después busque información del dispositivo (esto varía según el tipo de dispositivo móvil), y a continuación busque información de software y número de compilación. Cuando lo encuentre, toque 7 veces seguidas rápidamente y le saldrá que tiene que introducir su número de protección o pin o patrón de desbloqueo.</li>
+                <li>Después de esto, tiene que buscar depuración por USB en los ajustes de desarrollador y tiene que activarlo. Le saldrá un mensaje: "¿Quiere activar la depuración por USB? Este modo solo está hecho para fines de programación."</li>
+                <li>Toque aceptar.</li>
+                <li>Y después busque configuración predeterminada de USB y toque "Transferencia de archivos" o (MTP).</li>
+                <li>Y ahora, desde la terminal de su PC, puede ejecutar este comando: <code>adb</code></li>
+                <li>El comando <code>adb</code> sirve para ver la lista de comandos y para activar el adb.</li>
+                <li>Cuando ejecute este comando, puede introducir: <code>adb bugreport &lt;tipo de archivo&gt;</code> (como ZIP o RAR con la terminación <code>.rar</code> o <code>.zip</code>).</li>
+                <li>Lo más recomendable es el archivo ZIP para una extracción más fácil.</li>
+                <li>-Recuerde: No comparta esa información del reporte de errores con personas desconocidas, ya que tienen información del dispositivo que es muy importante.</li>
+            </ol>
+            <p>Fecha: 19/09/25</p>
+            <p>Hora: 3:54 pm</p>
+            <address>Todos los derechos reservados (Parrot Tecno Program)</address>
+        </section>
+        
+        <h4>Aquí está un poco de información de cómo hacer un reporte de errores desde Linux con ADB</h4>
+        <h4>Esta información está reservada con fines de bienestar digital</h4>
+
+        <section id="ambiente" class="contenedor-ambiental">
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <p style="font-weight: bold; color: #dc3545; font-size: 1.1em; padding: 0 15px;">⚠️ **¡ATENCIÓN! Este es un problema grave.**</p>
+                
+                <a href="https://www.google.com/search?q=contaminacion+ambiental+grave&tbm=isch"
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="boton-descarga boton-imagenes">
+                    Ver Imágenes del Impacto
+                </a>
+                <p style="font-size: 0.8em; margin-top: 5px; color: #555;">(El enlace te llevará a una búsqueda de imágenes de contaminación en Google)</p>
+            </div>
+            <hr>
+            <h3 style="color: #008000;">💚 Mensaje de la Brigada Ambiental de Waswali Arriba 💚</h3>
+            <p class="mensaje-ambiental">
+                ¡El planeta es nuestro hogar! Cada pequeña acción cuenta para protegerlo. ¡Sé parte de la solución, no de la contaminación!
+            </p>
+            
+            <hr>
+
+            <h4>Aviso importante: La contaminación ambiental es un problema muy serio...</h4>
+            <p>La contaminación ambiental es un problema muy serio para todos y todas, ya que la capa de ozono se está degradando. Esto es un problema muy grave y tenemos que ayudar a reciclar plásticos y cartones, para que esto no se pueda hacer un problema más grave y pase algo peor por las quemas de basura.</p>
+            
+            <p>
+                El Éxito del Ozono: Es vital recordar que la capa de ozono es nuestro escudo protector natural en la estratosfera, absorbiendo la peligrosa radiación ultravioleta (UV) que causa cáncer de piel y daña el fitoplancton marino (la base de la vida oceánica). El agujero de ozono fue un problema grave causado por químicos como los CFCs, pero gracias a la acción global coordinada bajo el **Protocolo de Montreal (1987)**, el uso de estos químicos fue prohibido. Este éxito histórico nos demuestra que cuando la humanidad actúa unida, podemos **sanar el planeta**. ¡Sigamos ese ejemplo con la crisis del clima y la basura!
+            </p>
+
+            <p class="mensaje-ambiental">
+                🌍 Lección del Ozono:¡Actuar ahora funciona! El Protocolo de Montreal nos enseñó que al prohibir contaminantes, la Tierra se recupera. Seamos la solución para la contaminación por basura y carbono.
+            </p>
+            <address>¡Así que ayudemos para que esto que está pasando no pase a más!</address>
+            
+            <p class="mensaje-ambiental">
+                🌱 Reforestar es Respirar:¡Planta un árbol! Son los pulmones del mundo y nos ayudan a combatir el cambio climático.
+            </p>
+
+            <hr>
+
+            <h3 style="color: #008000;">🐆 Nuestros Amigos, la Fauna y Flora 🌳</h3>
+            <p class="mensaje-ambiental">
+                ¡Protege la Biodiversidad! Los animales y las plantas son esenciales para el equilibrio del planeta.
+            </p>
+            <p>
+                La salud de la fauna y la flora local es un indicador directo de la salud del medio ambiente. Al reducir la contaminación y proteger los bosques, garantizamos un hogar seguro para innumerables especies.
+            </p>
+            <ul>
+                <li>Fauna:Evita el uso de productos químicos tóxicos que puedan dañar a los animales, especialmente a los insectos polinizadores.</li>
+                <li>Flora:No arranques plantas ni dañes árboles. La vegetación es crucial para producir oxígeno y mantener el suelo firme.</li>
+            </ul>
+            <p class="mensaje-ambiental">
+                **🤝 ¡Crea un Jardín para Polinizadores!** Si tienes espacio, planta flores que atraigan a abejas y mariposas, vitales para nuestros cultivos.
+            </p>
+            <hr>
+            <h4 style="color: #ff8c00;">Causas y Efectos de la Contaminación</h4>
+            <p>Es bueno ayudar a reciclar materiales como plásticos y cartones, ya que es bueno ayudar, es una buena acción, ayudar a reciclar, reforestar y más para ayuda del medio ambiente.</p>
+            <address>¡¡Ayudemos un poco al medio ambiente!!</address>
+            <h4>¿Cualquier acción para el medio ambiente, importa?</h4>
+            <p>¡Sí, cualquier acción importa!</p>
+
+            <table id="tabla-causas">
+                <thead>
+                    <tr>
+                        <th>Fuente Principal</th>
+                        <th>Tipo de Contaminación</th>
+                        <th>Efecto Directo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Quema de Combustibles Fósiles</td>
+                        <td>Aire</td>
+                        <td>Efecto invernadero y lluvia ácida.</td>
+                    </tr>
+                    <tr>
+                        <td>Desechos Plásticos y Basura</td>
+                        <td>Tierra y Agua</td>
+                        <td>Daño a la vida marina y terrestre (microplásticos).</td>
+                    </tr>
+                    <tr>
+                        <td>Emisiones Industriales y Químicas</td>
+                        <td>Agua y Tierra</td>
+                        <td>Toxicidad en suelos y cuerpos de agua.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h3 style="color: #007bff;">💧 Mensaje sobre el Agua y electricidad: 💡</h3>
+            <p class="mensaje-ambiental">
+                💡 ¡Ahorra Energía! Desconecta los aparatos que no uses y cambia a bombillos LED. Menos consumo = menos contaminación.
+            </p>
+            <p>
+                Recuerda: Reducir, Reutilizar y Reciclar. Este es el pilar de una vida sostenible. ¿Sabías que al reducir tu consumo de productos nuevos, disminuyes la energía necesaria para producirlos?
+            </p>
+            <p class="mensaje-ambiental">
+                **💧 ¡Cuidemos el Agua!** Cierra el grifo mientras te cepillas. El agua es un recurso limitado y vital para todos los seres vivos.
+            </p>
+            <p>
+                Alimentos, energía y agua están conectados. La producción de alimentos y energía requiere grandes cantidades de agua. Al ser conscientes de nuestro consumo, protegemos todo el ecosistema.
+            </p>
+            <p class="mensaje-ambiental">
+                **♻️ ¡Separa la Basura!** El primer paso para reciclar con éxito es clasificar correctamente el plástico, el papel, el vidrio y los orgánicos en casa. ¡Hagamos de esto un hábito!
+            </p>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            &copy; 2025 Parrot Tecno Web y Parrot Programs. Todos los derechos reservados.
+            <br>
+            Contacto: <a href="mailto:info@parrottecno.com" class="footer-link">info@parrottecno.com</a>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // 1. Lógica del Splash Screen
+            const splashScreen = document.getElementById('splash-screen');
+            const skipButton = document.getElementById('saltar-splash');
+
+            // Función para ocultar el splash
+            const hideSplash = () => {
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 500); // 500ms coincide con la duración de la transición CSS
+            };
+
+            // Manejar el clic en el botón "Saltar"
+            skipButton.addEventListener('click', hideSplash);
+
+            // 2. La lógica del Loro Bailando para la Descarga ha sido eliminada.
+        });
+    </script> 
+
+</body>
+</html>
