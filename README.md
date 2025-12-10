@@ -7,5 +7,7 @@ Esta es la web de la brigada medio ambiental de waswali arriba, para la vista de
 
 !Gracias por su hospitalidad!
 
+AVISO.NUM.1:EL CORREO ELECTRÓNICO DE LA WEB PARA SOPORTE TÉCNICO E INFORMACIÓN ES: infoparrottecnoweb@gmail.com
+
 1:40 pm.
 5/12/2025.
